@@ -1,0 +1,34 @@
+.counter-container {
+  position: relative;
+  display: inline-block;
+}
+.counter-counter {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+.counter-digit {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 0.6em;
+  overflow: hidden;
+}
+.counter-number {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.gradient-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.top-gradient, .bottom-gradient {
+  width: 100%;
+}
