@@ -68,17 +68,6 @@ const contactItems = [
     value: 'pranshu-singh-ps04',
     href: 'https://linkedin.com/in/pranshu-singh-ps04',
   },
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 4l11.733 16H20L8.267 4z"/>
-        <path d="M4 20l6.768-6.768M16 4l-2.12 2.12"/>
-      </svg>
-    ),
-    label: 'X / Twitter',
-    value: '@pranshu',
-    href: 'https://twitter.com/pranshu',
-  },
 ];
 
 export default function About() {
