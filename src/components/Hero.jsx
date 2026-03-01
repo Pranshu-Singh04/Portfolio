@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
+// ── Decrypt animation ──────────────────────────────────────────
 function DecryptedText({ text, speed = 120, delay = 0, className = '', encryptedClassName = '', parentClassName = '' }) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*';
   const rand = () => chars[Math.floor(Math.random() * chars.length)];
@@ -11,10 +12,7 @@ function DecryptedText({ text, speed = 120, delay = 0, className = '', encrypted
   const ref = useRef(null);
 
   useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setStarted(true); },
-      { threshold: 0.1 }
-    );
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setStarted(true); }, { threshold: 0.1 });
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
@@ -23,37 +21,24 @@ function DecryptedText({ text, speed = 120, delay = 0, className = '', encrypted
     if (!started) return;
     let rev = 0;
     let scrambleCount = 0;
-    const SCRAMBLE_ROUNDS = 6; // scramble each unrevealed char 6 times before revealing next
-
+    const SCRAMBLE_ROUNDS = 6;
     const t = setTimeout(() => {
       const interval = setInterval(() => {
         scrambleCount++;
-
         setDisplay(prev => {
           const next = [...prev];
-          // Scramble all unrevealed positions
-          for (let i = rev; i < text.length; i++) {
-            next[i] = rand();
-          }
+          for (let i = rev; i < text.length; i++) next[i] = rand();
           return next;
         });
-
         if (scrambleCount % SCRAMBLE_ROUNDS === 0 && rev < text.length) {
           rev++;
           setRevealed(rev);
-          setDisplay(prev => {
-            const next = [...prev];
-            next[rev - 1] = text[rev - 1];
-            return next;
-          });
+          setDisplay(prev => { const next = [...prev]; next[rev - 1] = text[rev - 1]; return next; });
         }
-
         if (rev >= text.length) clearInterval(interval);
       }, speed / SCRAMBLE_ROUNDS);
-
       return () => clearInterval(interval);
     }, delay);
-
     return () => clearTimeout(t);
   }, [started]);
 
@@ -68,6 +53,54 @@ function DecryptedText({ text, speed = 120, delay = 0, className = '', encrypted
   );
 }
 
+// ── Cycling typewriter tagline ─────────────────────────────────
+const PHRASES = [
+  'ML Enthusiast',
+  'Problem Solver',
+  'Full-Stack Developer',
+  'Researcher',
+  'Open Source Contributor',
+  'Building at the edge of ideas',
+];
+
+function TypewriterTagline() {
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [displayed, setDisplayed] = useState('');
+  const [phase, setPhase] = useState('typing'); // 'typing' | 'pausing' | 'erasing'
+
+  useEffect(() => {
+    const phrase = PHRASES[phraseIdx];
+
+    if (phase === 'typing') {
+      if (displayed.length < phrase.length) {
+        const t = setTimeout(() => setDisplayed(phrase.slice(0, displayed.length + 1)), 60);
+        return () => clearTimeout(t);
+      } else {
+        const t = setTimeout(() => setPhase('erasing'), 1800);
+        return () => clearTimeout(t);
+      }
+    }
+
+    if (phase === 'erasing') {
+      if (displayed.length > 0) {
+        const t = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 35);
+        return () => clearTimeout(t);
+      } else {
+        setPhraseIdx(i => (i + 1) % PHRASES.length);
+        setPhase('typing');
+      }
+    }
+  }, [displayed, phase, phraseIdx]);
+
+  return (
+    <p className="hero-tagline">
+      <span style={{ color: 'var(--cyan)' }}>{displayed}</span>
+      <span className="typewriter-cursor">|</span>
+    </p>
+  );
+}
+
+// ── Aurora ─────────────────────────────────────────────────────
 function AuroraBackground() {
   return (
     <div className="aurora-bg">
@@ -80,6 +113,7 @@ function AuroraBackground() {
   );
 }
 
+// ── Hero ───────────────────────────────────────────────────────
 export default function Hero() {
   return (
     <section className="hero-section">
@@ -101,7 +135,6 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.01, delay: 0.6 }}
         >
-          {/* 120ms per char × 7 chars = ~840ms just for reveal, plus scramble = ~4s total */}
           <DecryptedText
             text="Pranshu"
             speed={120}
@@ -121,20 +154,20 @@ export default function Hero() {
           />
         </motion.h1>
 
-        <motion.p
-          className="hero-tagline"
-          initial={{ opacity: 0, y: 20 }}
+        {/* Cycling typewriter — starts after name finishes */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.8 }}
+          transition={{ duration: 0.8, delay: 2.0 }}
         >
-          Developer & Researcher — building things at the edge of ideas.
-        </motion.p>
+          <TypewriterTagline />
+        </motion.div>
 
         <motion.div
           className="hero-cta-row"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 2.1 }}
+          transition={{ duration: 0.9, delay: 2.3 }}
         >
           <a href="#projects" className="hero-btn primary">View Projects</a>
           <a href="#contact" className="hero-btn ghost">Get in Touch</a>
@@ -145,7 +178,7 @@ export default function Hero() {
         className="hero-scroll-hint"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.5, duration: 1 }}
+        transition={{ delay: 2.6, duration: 1 }}
       >
         <span>scroll</span>
         <div className="hero-scroll-line" />
