@@ -23,7 +23,7 @@ export default function Contact() {
         <a href="mailto:actuallypranshu@email.com" className="contact-email">actuallypranshu@email.com ↗</a>
         <div className="contact-socials">
           <a href="https://github.com/Pranshu-Singh04" target="_blank" rel="noreferrer" className="contact-social-link">GitHub</a>
-          <a href="https://www.linkedin.com/in/pranshu-singh-ps0405" target="_blank" rel="noreferrer" className="contact-social-link">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/pranshu-singh-ba6661287" target="_blank" rel="noreferrer" className="contact-social-link">LinkedIn</a>
           <a href="https://twitter.com" target="_blank" rel="noreferrer" className="contact-social-link">Twitter</a>
         </div>
       </motion.div>

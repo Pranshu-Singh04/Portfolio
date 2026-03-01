@@ -84,7 +84,7 @@ export default function About() {
                     {[
                       { val: '2', label: 'Projects' },
                       { val: '1', label: 'Papers' },
-                      { val: 'IN', label: 'Origin' },
+                      { val: 'PNQ', label: 'Origin' },
                       { val: '✓', label: 'Available' },
                     ].map(s => (
                       <div key={s.label} className="flip-back-stat">
@@ -130,12 +130,12 @@ export default function About() {
             the same obsessive attention to detail to everything I make.
           </p>
           <div className="about-links">
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="about-link">GitHub ↗</a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="about-link">LinkedIn ↗</a>
-            <a href="/resume.pdf" target="_blank" rel="noreferrer" className="about-link">Résumé ↗</a>
+            <a href="https://github.com/Pranshu-Singh04" target="_blank" rel="noreferrer" className="about-link">GitHub ↗</a>
+            <a href="https://www.linkedin.com/in/pranshu-singh-ba6661287" target="_blank" rel="noreferrer" className="about-link">LinkedIn ↗</a>
+            <a href="/Resume11.pdf" target="_blank" rel="noreferrer" className="about-link">Résumé ↗</a>
           </div>
         </motion.div>
       </div>
     </section>
-  );
+  )
 }
