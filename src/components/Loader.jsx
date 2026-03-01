@@ -20,39 +20,50 @@ export default function Loader({ onDone }) {
   }, []);
 
   return (
-    <AnimatePresence onExitComplete={onDone}>
+    // ✅ No onExitComplete here — that's what was broken
+    <AnimatePresence>
       {!complete && (
         <motion.div
           key="loader"
           style={{
-            position: 'fixed', inset: 0, zIndex: 99990,
-            background: '#ffffff',
+            position: 'fixed',
+            inset: 0,
+            zIndex: 99990,
+            background: '#ffffff',       // your white background
+            pointerEvents: 'all',
           }}
           exit={{ y: '-100%' }}
           transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+          // ✅ onDone called here, on the motion div itself, after exit animation ends
+          onAnimationComplete={(def) => {
+            if (def === 'exit') onDone();
+          }}
         >
-          {/* Wide progress bar near bottom */}
+          {/* Progress bar — your green track, black fill, fixed position */}
           <div style={{
             position: 'absolute',
-            bottom: '500px', left: '6vw', right: '6vw',
+            bottom: '100px',             // was '500px' — that pushed it off screen
+            left: '6vw',
+            right: '6vw',
             height: '4px',
-            background: '#c3e0b2',
+            background: '#c3e0b2',       // your green track
             borderRadius: '4px',
             overflow: 'hidden',
           }}>
             <div style={{
               height: '100%',
               width: `${progress}%`,
-              background: '#000000',
+              background: '#000000',     // your black fill
               borderRadius: '2px',
               transition: 'width 0.08s linear',
             }} />
           </div>
 
-          {/* % — bottom right, black, big */}
+          {/* Big % number — bottom right, black */}
           <div style={{
             position: 'absolute',
-            bottom: '2rem', right: '6vw',
+            bottom: '2rem',
+            right: '6vw',
             fontFamily: 'Syne, sans-serif',
             fontSize: 'clamp(2.5rem, 8vw, 6rem)',
             fontWeight: 800,

@@ -16,18 +16,19 @@ export default function App() {
   return (
     <BrowserRouter>
       <Cursor />
+
+      {/* Always mounted — portfolio renders under the loader, visible the instant it slides away */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/project/:id" element={<ProjectDetail />} />
+        <Route path="/research/:id" element={<ResearchDetail />} />
+        <Route path="/skills" element={<SkillsPage />} />
+      </Routes>
+
+      {/* Loader is a fixed overlay on top — slides up and calls onDone when animation ends */}
       <AnimatePresence>
         {loading && <Loader onDone={() => setLoading(false)} />}
       </AnimatePresence>
-
-      {!loading && (
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/project/:id" element={<ProjectDetail />} />
-          <Route path="/research/:id" element={<ResearchDetail />} />
-          <Route path="/skills" element={<SkillsPage />} />
-        </Routes>
-      )}
     </BrowserRouter>
   );
 }

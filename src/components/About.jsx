@@ -1,7 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import profile from "../images/profile.jpg";
-
 
 function LiveAge({ started }) {
   const [age, setAge] = useState(null);
@@ -23,7 +21,7 @@ function LiveAge({ started }) {
     </div>
   );
 
-  const [whole, decimal] = age.toFixed(2).split('.');
+  const [whole, decimal] = age.toFixed(4).split('.');
   return (
     <div className="live-age">
       <span className="live-age-number">{whole}</span>
@@ -67,11 +65,7 @@ export default function About() {
                   <span className="flip-header-version">v1.0</span>
                 </div>
                 <div className="flip-card-photo-wrap">
-                  <img 
-                    src={profile}
-                    alt="Profile" 
-                    className="flip-photo-img"
-                  />
+                  <div className="flip-photo-placeholder">👤</div>
                 </div>
                 <div className="flip-front-bottom">
                   <div className="flip-front-name">Pranshu Singh</div>
@@ -136,9 +130,9 @@ export default function About() {
             the same obsessive attention to detail to everything I make.
           </p>
           <div className="about-links">
-            <a href="https://github.com/Pranshu-Singh04" target="_blank" rel="noreferrer" className="about-link">GitHub ↗</a>
-            <a href="https://linkedin.com/in/pranshu-singh-ps04" target="_blank" rel="noreferrer" className="about-link">LinkedIn ↗</a>
-            <a href={`${process.env.PUBLIC_URL}/Resume11.pdf`} target="_blank" rel="noreferrer" className="about-link">Résumé ↗</a>
+            <a href="https://github.com" target="_blank" rel="noreferrer" className="about-link">GitHub ↗</a>
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="about-link">LinkedIn ↗</a>
+            <a href="/resume.pdf" target="_blank" rel="noreferrer" className="about-link">Résumé ↗</a>
           </div>
         </motion.div>
       </div>
